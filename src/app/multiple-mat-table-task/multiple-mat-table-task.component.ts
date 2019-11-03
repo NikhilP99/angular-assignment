@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTable } from '@angular/material';
+import { MatTableDataSource, MatTable, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { AriaDescriber } from '@angular/cdk/a11y';
 
@@ -98,14 +98,18 @@ export class MultipleMatTableTaskComponent implements OnInit {
   @ViewChild('ltable') ltable: MatTable<master>;
   @ViewChild('atable') atable: MatTable<master>;
 
-  displayedColumns1: string[] = ['name', 'type','action'];
+  displayedColumns1: string[] = ['name','type','action'];
   dataSource1 = TABLE_DATA;
-  displayedColumns2: string[] = ['name', 'type'];
+  displayedColumns2: string[] = ['name','type'];
   dataSource2 = LAND_DATA
-  displayedColumns3: string[] = ['name', 'type'];
+  displayedColumns3: string[] = ['name','type'];
   dataSource3 = AIR_DATA
   constructor(private router: Router) { }
 
+  mTableLength = this.dataSource1.length
+  lTableLength = this.dataSource2.length
+  aTableLength = this.dataSource3.length
+  
   ngOnInit() {
   }
 
@@ -152,6 +156,9 @@ export class MultipleMatTableTaskComponent implements OnInit {
     var newData = TABLE_DATA.filter((el) => el.name !== element.name);
     TABLE_DATA = newData 
     this.mtable.dataSource = TABLE_DATA
+
+    this.lTableLength = this.dataSource2.length
+    this.aTableLength = this.dataSource3.length
 
     this.atable.renderRows()
     this.ltable.renderRows()
